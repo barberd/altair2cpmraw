@@ -7,7 +7,7 @@ The original Altair 8" floppy drive had 77 tracks consisting of 32 sectors of 13
 
 Additionally, the sectors in the first two tracks were often not skewed, as these were used for boot startup code, and adding a skew table would complicate and lengthen the bootloader at a time when the bootloader may have been entered by toggle switches on the front panel.
 
-Cpmtools, available at http://www.moria.de/~michael/cpmtools/, allows one to manipulate CPM disks, but does not understand the Altair format due to the odd sector size, skew table, and change in behavior depending upon track. These two utilities convers the altair disk image into something cpmtools can understand and back.
+Cpmtools, available at http://www.moria.de/~michael/cpmtools/, allows one to manipulate CPM disks, but does not understand the Altair format due to the odd sector size, skew table, and change in behavior depending upon track. These two utilities converts the altair disk image into something cpmtools can understand and back.
 
 ## Usage
 
@@ -52,13 +52,13 @@ For another example, to copy a file off the image:
 
 ## --boot option
 
-For both scripts, add the --boot option after filename to tell the script to not 'unskew' the first two tracks. This is only really needed if you're working with a boot disk and want to manipulate the boot record so you need it intact and in a sequential order.
-For standard usage (extracting and adding files), the CPM file allocation table shouldn't reference those two tracks at all so the --boot is not needed.
+For both scripts, add the --boot option after the filename to tell the script to not unskew/skew the first two tracks. This is only really needed if you're working with a boot disk and want to manipulate the boot record so you need it intact and in a sequential order.
+For typical usage (extracting and adding files), the CPM file allocation table shouldn't reference those two tracks at all so you needn't worry about it.
 
 ## Ideas for improvements
 
 * Do proper parameter management - right now its just quick and dirty sys.argv[]
-* Add options for output filename
+* Add options for output filename instead of just tacking on '.altair' or '.cpmraw' to the original
 * Add check to ensure not overwriting an existing output file
 * Add support for Altair 5.25" disks
 
