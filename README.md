@@ -13,17 +13,46 @@ Cpmtools, available at http://www.moria.de/~michael/cpmtools/, allows one to man
 
 altair2cpmraw.py extracts the abstracted CPM 128 byte sectors and writes them to a new 'cpmraw' image linearly, so cpmtools can understand it. It can also verify the integrity by using the same checksum algorithm as the original CPM BIOS.
 
-Run it by ./altair2cpmraw.py <imagefile>
-It will output a new file with the name <imagefile>.cpmraw
+Run it by passing the image name, such as:
+
+	./altair2cpmraw.py file.dsk
+
+It will output a new file with the name file.dsk.cpmraw
 
 cpmraw2altair.py does the opposite by wrapping the CPM sectors into 137 bytes and adding the appropriate track, sector, and checksum information and skewing it to the right physical location. 
 
-Run it by ./cpmraw2altair.py <imagefile>
-It will output a new file with the name <imagefile>.altair
+Run it by passing the image name, such as:
+
+	./cpmraw2altair.py file.cpmraw
+
+It will output a new file with the name file.cpmraw.altair
+
+## Configuring cpmtools
+
+Add this to your cpm tools diskdefs file, likely in /etc/cpmtools/diskdefs:
+
+	diskdef altaircpmraw
+	  seclen 128
+	  tracks 77
+	  sectrk 32
+	  blocksize 2048
+	  maxdir 64
+	  boottrk 2
+	  os 2.2
+	end
+
+Then use the '-f altaircpmraw' option when using cpmtools. For example, to list the files:
+
+	cpmls -f altaircpmraw file.dsk.cpmraw
+
+For another example, to copy a file off the image:
+
+	cpmcp -f altaircpmraw file.dsk.cpmraw 0:PIP.COM .
+
 
 ## --boot option
 
-For both scripts, add the --boot option after <imagefile> to tell the script to not 'unskew' the first two tracks. This is only really needed if you're working with a boot disk and want to manipulate the boot record so you need it intact and in a sequential order.
+For both scripts, add the --boot option after filename to tell the script to not 'unskew' the first two tracks. This is only really needed if you're working with a boot disk and want to manipulate the boot record so you need it intact and in a sequential order.
 For standard usage (extracting and adding files), the CPM file allocation table shouldn't reference those two tracks at all so the --boot is not needed.
 
 ## Ideas for improvements
