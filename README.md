@@ -1,9 +1,9 @@
 # altair2cpmraw
-Converts Altair 8" floppy images to something cpmtools can understand and back
+Converts Altair 8800 8" floppy images to something cpmtools can understand and back
 
 ## Purpose
 
-The original Altair 8" floppy drive had 77 tracks consisting of 32 sectors of 137 bytes each. However, CPM operated on 128 byte sectors. The Altair CPM BIOS would wrap this 128 bytes into 137 bytes by adding track data, sector data, and checksum data. It also implemented its own skew mechanism so sectors were not stored sequentially on disk, which sped up access time. Additionally, the format used was slightly different between tracks 0-5 and 6-76.
+The original Altair 8800 8" floppy drive had 77 tracks consisting of 32 sectors of 137 bytes each. However, CPM operated on 128 byte sectors. The Altair CPM BIOS would wrap this 128 bytes into 137 bytes by adding track data, sector data, and checksum data. It also implemented its own skew mechanism so sectors were not stored sequentially on disk, which sped up access time. Additionally, the format used was slightly different between tracks 0-5 and 6-76.
 
 Additionally, the sectors in the first two tracks were often not skewed, as these were used for boot startup code, and adding a skew table would complicate and lengthen the bootloader at a time when the bootloader may have been entered by toggle switches on the front panel.
 
